@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person'
+import UserInput from './User/UserInput'
+import UserOutput from './User/UserOutput'
 
 class App extends Component {
   state = {
     persons: [
       { name: 'Bart', age: 21} ,
       { name: 'Filop', age: 22}
-    ]
+    ],
+    username: 'something'
   }
 
   switchName = (newName) => {
@@ -26,6 +29,12 @@ class App extends Component {
         { name: 'Bart', age: 21} ,
         { name: event.target.value, age: 72}
       ]
+    })
+  }
+
+  userChangedInput = (event) => {
+    this.setState({
+      username: event.target.value
     })
   }
 
@@ -57,6 +66,15 @@ class App extends Component {
           onClick={() => this.switchName('Maximillian!!')}>
           Switch name
         </button>
+        <UserInput
+          changed={this.userChangedInput}
+          value={this.state.username}
+          >
+        </UserInput>
+        <UserOutput
+          data={this.state.username}
+          >
+        </UserOutput>
       </div>
     );
   }
