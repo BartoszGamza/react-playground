@@ -24,8 +24,15 @@ class App extends Component {
     return (
       <div className="App">
         <h1>hello</h1>
-        <Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
-        <Person name={this.state.persons[1].name} age={this.state.persons[1].age}>My Hobby is reading</Person>
+        <Person
+          name={this.state.persons[0].name}
+          age={this.state.persons[0].age} />
+        <Person
+          name={this.state.persons[1].name}
+          age={this.state.persons[1].age}
+          click={this.switchName}>
+          My Hobby is reading
+        </Person>
         <button onClick={this.switchName}>Switch name</button>
       </div>
     );
