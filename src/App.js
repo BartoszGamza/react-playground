@@ -14,16 +14,6 @@ class App extends Component {
     showPersons: true
   }
 
-  switchName = (newName) => {
-    this.setState({
-      persons: [
-        { name: newName, age: 21} ,
-        { name: 'Filop', age: 72}
-      ]
-    })
-    console.log('names changed')
-  }
-
   changeName = (event) => {
     this.setState({
       persons: [
@@ -44,6 +34,12 @@ class App extends Component {
     this.setState({showPersons: !doesShow})
   }
 
+  deletePerson = (index) => {
+    const obj = this.state.persons
+    obj.splice(index, 1)
+    this.setState({persons: obj})
+  }
+
   render () {
     const style = {
       backgroundColor: 'white',
@@ -58,7 +54,14 @@ class App extends Component {
     if (this.state.showPersons) {
       persons = (
         <div>
-          <Person
+          {this.state.persons.map( (person, index) => {
+            return <Person
+              name={person.name}
+              age={person.age}
+              click={this.deletePerson.bind(this, index)}
+              key={index} />
+          })}
+          {/* <Person
             name={this.state.persons[0].name}
             age={this.state.persons[0].age}
             input={this.changeName}/>
@@ -68,7 +71,7 @@ class App extends Component {
             click={this.switchName.bind(this, 'Max!')} //bind is better option than below
             input={this.changeName}>
             My Hobby is reading
-          </Person>
+          </Person> */}
         </div>
       )
     }
