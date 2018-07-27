@@ -7,20 +7,25 @@ import UserOutput from './User/UserOutput'
 class App extends Component {
   state = {
     persons: [
-      { name: 'Bart', age: 21} ,
-      { name: 'Filop', age: 22}
+      { id: 1, name: 'Bart', age: 21} ,
+      { id: 2, name: 'Filop', age: 22}
     ],
     username: 'something',
     showPersons: true
   }
 
-  changeName = (event) => {
-    this.setState({
-      persons: [
-        { name: 'Bart', age: 21} ,
-        { name: event.target.value, age: 72}
-      ]
+  changeName = (event, id) => {
+    const personIndex = this.state.persons.findIndex(p => {
+      return p.id === id
     })
+
+    const person = {...this.state.persons[personIndex]}
+
+    person.name = event.target.value
+    const persons = [...this.state.persons]
+    persons[personIndex] = person
+
+    this.setState({persons: persons})
   }
 
   userChangedInput = (event) => {
@@ -35,7 +40,7 @@ class App extends Component {
   }
 
   deletePerson = (index) => {
-    const obj = this.state.persons
+    const obj = [...this.state.persons] //creates a copy not a pointer!
     obj.splice(index, 1)
     this.setState({persons: obj})
   }
@@ -54,12 +59,13 @@ class App extends Component {
     if (this.state.showPersons) {
       persons = (
         <div>
-          {this.state.persons.map( (person, index) => {
+          {this.state.persons.map( (person) => {
             return <Person
               name={person.name}
               age={person.age}
-              click={this.deletePerson.bind(this, index)}
-              key={index} />
+              click={this.deletePerson.bind(this, person.id)}
+              key={person.id}
+              input={(event) => this.changeName(event, person.id)} />
           })}
           {/* <Person
             name={this.state.persons[0].name}
