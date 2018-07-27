@@ -10,7 +10,8 @@ class App extends Component {
       { name: 'Bart', age: 21} ,
       { name: 'Filop', age: 22}
     ],
-    username: 'something'
+    username: 'something',
+    showPersons: true
   }
 
   switchName = (newName) => {
@@ -38,6 +39,11 @@ class App extends Component {
     })
   }
 
+  togglePersons = () => {
+    const doesShow = this.state.showPersons
+    this.setState({showPersons: !doesShow})
+  }
+
   render () {
     const style = {
       backgroundColor: 'white',
@@ -47,24 +53,34 @@ class App extends Component {
       cursor: 'pointer'
     }
 
+    let persons = null
+
+    if (this.state.showPersons) {
+      persons = (
+        <div>
+          <Person
+            name={this.state.persons[0].name}
+            age={this.state.persons[0].age}
+            input={this.changeName}/>
+          <Person
+            name={this.state.persons[1].name}
+            age={this.state.persons[1].age}
+            click={this.switchName.bind(this, 'Max!')} //bind is better option than below
+            input={this.changeName}>
+            My Hobby is reading
+          </Person>
+        </div>
+      )
+    }
+
     return (
       <div className="App">
         <h1>hello</h1>
-        <Person
-          name={this.state.persons[0].name}
-          age={this.state.persons[0].age}
-          input={this.changeName}/>
-        <Person
-          name={this.state.persons[1].name}
-          age={this.state.persons[1].age}
-          click={this.switchName.bind(this, 'Max!')} //bind is better option than below
-          input={this.changeName}>
-          My Hobby is reading
-        </Person>
+        {persons}
         <button
           style={style}
-          onClick={() => this.switchName('Maximillian!!')}>
-          Switch name
+          onClick={this.togglePersons}>
+          Switch view
         </button>
         <UserInput
           changed={this.userChangedInput}
