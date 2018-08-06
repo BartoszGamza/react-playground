@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import classes from'./App.css';
 import Radium, { StyleRoot } from 'radium'
 import Person from './Person/Person'
 import UserInput from './User/UserInput'
@@ -93,21 +93,21 @@ class App extends Component {
       }
     }
 
-    let classes = []
+    let AssignedClasses = []
 
     if (this.state.persons.length <= 2) {
-      classes.push('red')
+      AssignedClasses.push('red')
     }
 
     if (this.state.persons.length <=1) {
-      classes.push('bold')
+      AssignedClasses.push('bold')
     }
 
     return (
       <StyleRoot>
-      <div className="App">
+      <div className={classes.App}>
         <h1>hello</h1>
-        <p className={classes}>Test</p>
+        <p className={AssignedClasses}>Test</p>
         {persons}
         <button
           style={style}
